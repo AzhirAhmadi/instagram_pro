@@ -28,12 +28,8 @@
         <% end %>
       </div>
     </div>
+    <div id="posts">
+      <%= render 'posts_list' %>
+    </div>
   </div>
 </div>
-
-<% @posts.each do |post|%>
-    <p><%= post.content%></p>
-    <% post.photos.each do |photo|%>
-        <%= image_tag photo.image.url(:standard)%>
-    <%end%>
-<%end%>

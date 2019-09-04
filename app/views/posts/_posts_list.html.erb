@@ -1,0 +1,23 @@
+<% @posts.each do |post| %>
+  <div class="card mt-3 post">
+    <div class="card-header d-flex align-items-center">
+      <%= link_to user_path(post.user), class: "no-text-decoration" do %>
+        <%= image_tag avatar_url(post.user), class: "post-author-icon" %>
+      <% end %>
+      <%= link_to user_path(post.user), class: "normal-color no-text-decoration",
+        title: post.user.name do %>
+        <strong><%= post.user.name %></strong>
+      <% end %>
+    </div>
+
+    <%= render "photos", {post: post} %>
+
+    <div class="card-body">
+      <div class="row actions">
+        <a href="#" class="core-sprite love hide-text">Love</a>
+        <a href="#" class="core-sprite comment hide-text">Comment</a>
+        <a href="#" class="core-sprite bookmark hide-text ml-auto">Bookmark</a>
+      </div>
+    </div>
+  </div>
+<% end %>
