@@ -8,20 +8,21 @@ class PostsController < ApplicationController
 
     def create
         @post = current_user.posts.build(post_params)
-        photos
         if @post.save
             if params[:images]
                 params[:images].each do |img|
-                photos << @post.photos.create(image: params[:images][img])
+        feed_back = @post.photos.create(image: img[1])
                     pp "________________________________________________"
                     pp "feed_back"
-                    pp photos
+                    pp feed_back
                     pp "params[:images]"
                     pp params[:images]
                     pp "params[:images][img]"
                     pp params[:images][img]
-                    pp "img"
+                    pp "img.class"
                     pp img
+                    pp "img"
+                    pp img.class
                     pp "________________________________________________"
                 end
             end
