@@ -1,24 +1,37 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>InstagramPro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <script src="https://kit.fontawesome.com/d1e66a703e.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <%= favicon_link_tag 'icon.png' %>
   </head>
 
   <body>
-    <%=render "partials/navbar" if current_user%>
+    <%= render 'shared/navbar' if current_user %>
+    <div class="container">
+      <%= yield %>
+    </div>
+    <%= render 'shared/footer' %>
 
-    <%= yield %>
-
-    <%=render "partials/footer"%>
-    <%=render "partials/notifyer"%>
-
+    <% if flash.any? %>
+      <script type="text/javascript">
+        <% flash.each do |key, value| %>
+          <% type = key.to_s.gsub('alert', 'error').gsub('notice', 'success') %>
+          toastr.<%= type %>('<%= value %>')
+        <% end %>
+      </script>
+    <% end %>
   </body>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-65590279-6"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-65590279-6');
+  </script>
 </html>
-
-

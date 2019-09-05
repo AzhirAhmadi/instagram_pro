@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :comment, dependent: :destroy
+  has_many :bookmarks, dependent: :destroy
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
@@ -24,4 +25,13 @@ class User < ApplicationRecord
       # user.skip_confirmation!
     end
   end
+
+  def self.search term
+    if term
+      where("name LIKE ?", "%#{term}%")
+    else
+      nil
+    end
+  end
+
 end

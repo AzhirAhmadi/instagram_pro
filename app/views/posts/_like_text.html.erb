@@ -4,7 +4,7 @@
           <%= like.user.name %> </strong> like this
       <% elsif like == likes.last %>
           </strong>and<strong>
-  <%=  like.user.name %></strong> like this
+  <%= + like.user.name %></strong> like this
       <% elsif index > 1 %>
           </strong><%= "and " + (likes.size-index).to_s + " others " %> like this
           <% break %>
