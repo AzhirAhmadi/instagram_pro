@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
     before_action :authenticate_user!
-    before_action :find_post, only: [:show]
+    before_action :find_post, only: [:show, :destroy]
     def index 
         @posts = Post.all.limit(50).includes(:photos, :user).order("created_at desc")
         @post = Post.new
@@ -11,19 +11,7 @@ class PostsController < ApplicationController
         if @post.save
             if params[:images]
                 params[:images].each do |img|
-        feed_back = @post.photos.create(image: img[1])
-                    pp "________________________________________________"
-                    pp "feed_back"
-                    pp feed_back
-                    pp "params[:images]"
-                    pp params[:images]
-                    pp "params[:images][img]"
-                    pp params[:images][img]
-                    pp "img.class"
-                    pp img
-                    pp "img"
-                    pp img.class
-                    pp "________________________________________________"
+                    @post.photos.create(image: img[1])
                 end
             end
             
@@ -39,6 +27,18 @@ class PostsController < ApplicationController
         @photos = @post.photos
     end
 
+    def destroy
+        if @post.user == current_user
+            if @post.destroy
+                flash[:notice] = "Post deleted!"
+            else
+                flash[:alert] = "Something went wrong ..."
+            end
+        else
+            flash[:notice]
+        end 
+        redirect_to root_path
+    end
     private
         def find_post
             @post = Post.find_by id: params[:id]
